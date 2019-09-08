@@ -2,25 +2,40 @@ server:
   port: 1234
 
 spring:
-  cloud:
-    gateway:
-      routes:
-        - id: redis_rate_limiter_config_test
-          uri: lb://schema
-          predicates:
-              - Path=/**
-          filters:
-              - name: RequestRateLimiter
-                args:
-                  redis-rate-limiter:
-                    replenish-rate: 10
-                    burst-capacity: 20
-                key-resolver: "#{@userKeyResolver}"
+#  cloud:
+#    gateway:
+#      routes:
+#        - id: redis_rate_limiter_config_test
+#          uri: lb://schema
+#          predicates:
+#              - Path=/api/**
+#          filters:
+#              - name: RequestRateLimiter
+#                args:
+#                  redis-rate-limiter:
+#                    replenish-rate: 10
+#                    burst-capacity: 20
+#                key-resolver: "#{@userKeyResolver}"
 
 
   redis:
     host: localhost
     port: 6379
+
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/apigw
+    username: postgres
+    password: qwerty
+    validationQuery: SELECT 1
+    maxTotal: 10
+    maxIdle: 10
+    initialSize: 5
+    defaultAutoCommit: false
+    testOnBorrow: true
+    testWhileIdle: true
+    testOnReturn: true
+    poolPreparedStatements: true
 
 eureka:
   instance:
