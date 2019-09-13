@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 
 import javax.annotation.PostConstruct;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 @Configuration
@@ -22,7 +23,7 @@ public class ClientRateLimitGlobalFilter {
 	@Autowired
 	private RateLimitService rateLimitService;
 
-	@PostConstruct
+//	@PostConstruct
 	public void init() {
 
 
@@ -44,19 +45,23 @@ public class ClientRateLimitGlobalFilter {
 	public GlobalFilter clientRateLimitFilter() {
 	    return (exchange, chain) -> { 
 	    	log.debug("ClientRateLimitFilter called");
-
-	    	
-	    	//TODO: Currently the specified number only applied for single api gateway instance.
-			//1. Extract Access Token
-			String key = "urn:aud";
-			//2. get Client ID
-			Integer value = rateLimitCache.getUnchecked(key);
-			log.debug("value : {}",value);
-			if(value < 1) {
-				throw new RuntimeException("Exceed Request");
-			}
-
-			rateLimitCache.asMap().replace(key,--value);
+//
+//	    	//TODO: Currently the specified number only applied for single api gateway instance.
+//			//1. Extract Access Token
+//			String key = "urn:aud";
+//			//2. get Client ID
+//			Integer value = null;
+//			try {
+//				value = rateLimitCache.get(key);
+//			} catch (ExecutionException e) {
+//				e.printStackTrace();
+//			}
+//			log.debug("value : {}",value);
+//			if(value < 1) {
+//				throw new RuntimeException("Exceed Request");
+//			}
+//
+//			rateLimitCache.asMap().replace(key,--value);
 	    	
 	    	return chain.filter(exchange);
 	    };

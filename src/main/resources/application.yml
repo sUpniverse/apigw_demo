@@ -2,20 +2,27 @@ server:
   port: 1234
 
 spring:
-#  cloud:
-#    gateway:
-#      routes:
+  cloud:
+    gateway:
+      default-filters:
+          - name: RequestRateLimiter
+            args:
+              redis-rate-limiter.replenish-rate: 10
+              redis-rate-limiter.burst-capacity: 20
+              key-resolver: "#{@userKeyResolver}"
+
+#        routes:
 #        - id: redis_rate_limiter_config_test
 #          uri: lb://schema
 #          predicates:
 #              - Path=/api/**
 #          filters:
-#              - name: RequestRateLimiter
-#                args:
-#                  redis-rate-limiter:
-#                    replenish-rate: 10
-#                    burst-capacity: 20
+#            - name: RequestRateLimiter
+#              args:
+#                redis-rate-limiter.replenish-rate: 10
+#                redis-rate-limiter.burst-capacity: 20
 #                key-resolver: "#{@userKeyResolver}"
+
 
 
   redis:

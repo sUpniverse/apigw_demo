@@ -10,6 +10,6 @@ public class keyconifg {
 
     @Bean
     KeyResolver userKeyResolver() {
-        return exchange -> Mono.just("client");
+        return exchange -> Mono.just("urn:aud");
     }
 }
