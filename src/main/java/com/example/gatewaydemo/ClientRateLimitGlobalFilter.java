@@ -20,9 +20,6 @@ public class ClientRateLimitGlobalFilter {
 
 	private LoadingCache<String,Integer> rateLimitCache;
 
-	@Autowired
-	private RateLimitService rateLimitService;
-
 //	@PostConstruct
 	public void init() {
 
@@ -34,7 +31,7 @@ public class ClientRateLimitGlobalFilter {
 					@Override
 					public Integer load(String s) throws Exception {
 						//Todo : DB상에 값이 존재하지 않을 경우,,
-						return rateLimitService.getValue(s).getValue();
+						return 11;
 					}
 				});
 	}

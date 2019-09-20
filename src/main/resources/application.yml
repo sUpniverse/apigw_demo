@@ -4,26 +4,14 @@ server:
 spring:
   cloud:
     gateway:
-      default-filters:
-          - name: RequestRateLimiter
-            args:
-              redis-rate-limiter.replenish-rate: 10
-              redis-rate-limiter.burst-capacity: 20
-              key-resolver: "#{@userKeyResolver}"
+      #      default-filters:
+      #          - name: RequestRateLimiter
+      #            args:
+      #              redis-rate-limiter.replenish-rate: 10
+      #              redis-rate-limiter.burst-capacity: 20
+      #              key-resolver: "#{@userKeyResolver}"
 
-#        routes:
-#        - id: redis_rate_limiter_config_test
-#          uri: lb://schema
-#          predicates:
-#              - Path=/api/**
-#          filters:
-#            - name: RequestRateLimiter
-#              args:
-#                redis-rate-limiter.replenish-rate: 10
-#                redis-rate-limiter.burst-capacity: 20
-#                key-resolver: "#{@userKeyResolver}"
-
-
+     key-resolver: "#{@userKeyResolver}"
 
   redis:
     host: localhost
@@ -44,6 +32,7 @@ spring:
     testOnReturn: true
     poolPreparedStatements: true
 
+
 eureka:
   instance:
     prefer-ip-address: true
@@ -57,3 +46,9 @@ logging:
   level:
     com.example.gatewaydemo: debug
     org.springframework: debug
+
+clientRateLimit:
+  scope: local
+  type: clientId #hostName, IP
+  replenishRate: 10
+  burstCapacity: 10
