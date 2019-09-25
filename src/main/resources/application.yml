@@ -11,7 +11,6 @@ spring:
       #              redis-rate-limiter.burst-capacity: 20
       #              key-resolver: "#{@userKeyResolver}"
 
-     key-resolver: "#{@userKeyResolver}"
 
   redis:
     host: localhost
@@ -47,8 +46,8 @@ logging:
     com.example.gatewaydemo: debug
     org.springframework: debug
 
-clientRateLimit:
+client-rateLimit:
   scope: local
   type: clientId #hostName, IP
-  replenishRate: 10
-  burstCapacity: 10
+  replenishRate: 1
+  burstCapacity: 3
